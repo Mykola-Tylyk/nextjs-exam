@@ -24,6 +24,7 @@
 
 
 import {getUser} from "@/services/api.service";
+import RecipesList from "@/components/recipesList/RecipesList";
 
 const UserById = async ({id}: {id: string}) => {
 
@@ -45,8 +46,8 @@ const UserById = async ({id}: {id: string}) => {
                     <p><strong>gender</strong> - {user.gender}</p>
                     <p><strong>eye color</strong> - {user.eyeColor}</p>
 
-                    {/*<h4>User Recipes</h4>*/}
-                    {/*<RecipesList userId={parseInt(id || '')} />*/}
+                    <h4>User Recipes</h4>
+                    <RecipesList userId={parseInt(id || '')} currentPage={1} limit={0} />
                 </div>
             }
         </div>
