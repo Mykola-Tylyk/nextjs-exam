@@ -14,7 +14,7 @@ const UserSingleComponent: FC<UserTypeProps> = ({item}) => {
 
     return (
         <div>
-            <Link href={`/users/${item.id}`}><strong>{item.id}</strong> - {item.firstName} - {item.lastName}</Link>
+            <Link href={`/user/users/${item.id}`}><strong>{item.id}</strong> - {item.firstName} - {item.lastName}</Link>
         </div>
     );
 };

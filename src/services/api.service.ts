@@ -86,13 +86,13 @@ export const refresh = async () => {
     return iTokens;
 }
 
-//
-// export const getUser = async (id: string) => {
-//     const {data} = await axiosInstance.get<IUser>('/users/' + id);
-//     console.log(data);
-//     return data;
-// }
-//
+
+export const getUser = async (id: string) => {
+    const {data} = await axiosInstance.get<IUser>('/users/' + id);
+    console.log('getUser:',data);
+    return data;
+}
+
 
 
 //AXIOS с 401----------------------------------------------------------------------------
@@ -132,11 +132,8 @@ export const refresh = async () => {
 // AXIOS----------------------------------------------------------------------------
 export const getResourcesUsers = async (page: number, limit: number) => {
     const skip: number = limit * page - limit;
-    console.log(skip);
-    // const token = await getCookies(); // Твой токен
-    // console.log("Токен из куков:", token); // Проверяем токен
     const {data: data} = await axiosInstance.get<IUsersResponse>('/users' + '?skip=' + skip);
-    console.log(data);
+    console.log('getResourcesUsers:',data);
     return data;
 }
 
