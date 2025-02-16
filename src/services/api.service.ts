@@ -4,6 +4,8 @@ import {setCookies, getCookiesAccessToken, getCookiesRefreshToken} from "@/serve
 import {IUser} from "@/models/IUser";
 import {ITokens} from "@/models/ITokens";
 import {IUsersResponse} from "@/models/IUsersResponse";
+import {IRecipesResponse} from "@/models/IRecipesResponse";
+import {IRecipe} from "@/models/IRecipe";
 
 
 type LoginProps = {
@@ -132,7 +134,7 @@ export const getUser = async (id: string) => {
 // AXIOS----------------------------------------------------------------------------
 export const getResourcesUsers = async (page: number, limit: number) => {
     const skip: number = limit * page - limit;
-    const {data: data} = await axiosInstance.get<IUsersResponse>('/users' + '?skip=' + skip);
+    const {data: data} = await axiosInstance.get<IUsersResponse>('/users?skip=' + skip + '&limit=' + limit);
     console.log('getResourcesUsers:',data);
     return data;
 }
@@ -154,27 +156,27 @@ export const getResourcesUsers = async (page: number, limit: number) => {
 // };
 
 
-//
-// export const getRecipe = async (id: string) => {
-//     const {data} = await axiosInstance.get<IRecipe>('/recipes/' + id);
-//     console.log(data);
-//     return data;
-// }
-//
-//
-// export const getResourcesRecipes = async (page: string, limit: number) => {
-//     const skip: number = limit * (+page) - limit;
-//     const {data: {recipes, total}} = await axiosInstance.get<IRecipesResponse>('/recipes?skip=' + skip + '&limit=' + limit);
-//     return {recipes, total};
-// }
-//
-//
-// export const getRecipesTag = async (tagValue: string) => {
-//     const {data: {recipes: tags}} = await axiosInstance.get<IRecipesResponse>('/recipes/tag/' + tagValue);
-//     console.log(tags);
-//     return tags;
-// }
-//
+
+export const getRecipe = async (id: string) => {
+    const {data} = await axiosInstance.get<IRecipe>('/recipes/' + id);
+    console.log('getRecipe:',data);
+    return data;
+}
+
+
+export const getResourcesRecipes = async (page: number, limit: number) => {
+    const skip: number = limit * page - limit;
+    const {data: data} = await axiosInstance.get<IRecipesResponse>('/recipes?skip=' + skip + '&limit=' + limit);
+    return data;
+}
+
+
+export const getRecipesTag = async (tagValue: string) => {
+    const {data: {recipes: tags}} = await axiosInstance.get<IRecipesResponse>('/recipes/tag/' + tagValue);
+    console.log(tags);
+    return tags;
+}
+
 // export const getSearch = async (inputValue: string, page: string) => {
 //     const{data} = await axiosInstance.get<ISearchResponse>('/' + page + '/search?q=' + inputValue);
 //     if ('recipes' in data) {
