@@ -11,7 +11,7 @@ const FormComponent = () => {
 
     const {handleSubmit, register, formState: {errors, isValid}} = useForm<IFormProps>({mode: 'all', resolver:joiResolver(userValidator)});
     const customHandler = (formDataProps: IFormProps) => {
-        const updatedData = { ...formDataProps, expiresInMins: 1 }
+        const updatedData = { ...formDataProps, expiresInMins: 60 }
         login(updatedData).then(value => {
             console.log(value)
         })

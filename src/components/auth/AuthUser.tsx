@@ -22,18 +22,6 @@ const AuthUser = () => {
             .catch(error => {
                 console.error("Error image:", error);
                 console.log('zxc');
-                // setTimeout(() => {
-                //     getAuthUser()
-                //         .then((value) => {
-                //             setImg(value);
-                //             console.log('qwe');
-                //         })
-                //         .catch((error) => {
-                //             console.error("Retry failed:", error);
-                //             console.log('bnm');
-                //             redirect('/login');
-                //         });
-                // }, 1);
                 refresh()
                     .then(() => getAuthUser()
                         .then((value) => {
@@ -51,12 +39,6 @@ const AuthUser = () => {
                 })
 
             });
-
-
-        // refresh()
-        //     .then(() => getAuthUser())
-        //     .then(value => setImg(value))
-        //     .catch(error => console.error("Error image:", error));
     }, []);
 
 

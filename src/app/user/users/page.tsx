@@ -1,11 +1,11 @@
 import UsersList from "@/components/usersList/UsersList";
 
 const UsersPage = () => {
-
+const currentPage = 3
 
     return (
         <div>
-            <UsersList/>
+            <UsersList currentPage={currentPage}/>
         </div>
     );
 };

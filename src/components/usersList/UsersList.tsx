@@ -31,24 +31,28 @@
 import {getResourcesUsers} from "@/services/api.service";
 // import Search from "@/components/search/Search";
 import UserSingleComponent from "@/components/userSingleComponent/UserSingleComponent";
+import {IUser} from "@/models/IUser";
 import Pagination from "@/components/pagination/Pagination";
 
 
 
 
-const UsersList = async ({ searchParams }: { searchParams?: { page?: string } }) => {
-    const page = searchParams?.page || '1';
+const UsersList = async ({ currentPage }: { currentPage: number }) => {
+    const page = currentPage || 1;
+    console.log("PAGE:",page);
     const limit = 30;
-    const {users, total} = await getResourcesUsers(page, limit);
-
+    const data = await getResourcesUsers(page, limit);
+    console.log(data);
+    console.log(data.users);
+    console.log(data.total);
     return (
         <div>
             {/*<Search page={'users'}/>*/}
             <hr/>
             {
-                users.map((user) => <UserSingleComponent key={user.id} item={user}/>)
+                data.users.map((user:IUser) => <UserSingleComponent key={user.id} item={user}/>)
             }
-            <Pagination totalPages={Math.ceil(total / limit)} />
+            <Pagination totalPages={Math.ceil(data.total / limit)} />
         </div>
     );
 };
