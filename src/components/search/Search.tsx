@@ -1,12 +1,15 @@
+'use client'
+
 import {joiResolver} from "@hookform/resolvers/joi";
+import searchValidator from "@/validators/search.validator";
+import {ISearchProps} from "@/models/ISearchProps";
 import {useForm} from "react-hook-form";
-import {ISearchProps} from "../../models/ISearchProps.ts";
-import searchValidator from "../validators/search.validator.ts";
-import {useAppSelector} from "../../redux/hooks/useAppSelector.tsx";
-import {useAppDispatch} from "../../redux/hooks/useAppDispatch.tsx";
-import RecipeSingleComponent from "../recipeSingleComponent/RecipeSingleComponent.tsx";
-import UserSingleComponent from "../userSingleComponent/UserSingleComponent.tsx";
-import {loadSearch} from "../../redux/slices/searchSlice/searchSlice.ts";
+import RecipeSingleComponent from "@/components/recipeSingleComponent/RecipeSingleComponent";
+import UserSingleComponent from "@/components/userSingleComponent/UserSingleComponent";
+import {getSearch, getSearchId} from "@/services/api.service";
+import {useState} from "react";
+import {IRecipe} from "@/models/IRecipe";
+import {IUser} from "@/models/IUser";
 
 
 type SearchProps = {
@@ -16,8 +19,7 @@ type SearchProps = {
 
 const Search = ({page}: SearchProps) => {
 
-    const dispatch = useAppDispatch();
-    const {searchResults} = useAppSelector(({searchSlice}) => searchSlice);
+    const [searchResults, setSearchResults] = useState<IUser[] | IRecipe[]>([]);
 
     const {handleSubmit, register, formState: {errors, isValid}} = useForm<ISearchProps>({
         mode: 'all',
@@ -25,10 +27,31 @@ const Search = ({page}: SearchProps) => {
     });
 
     const handler = (formDataProps: ISearchProps) => {
-        dispatch(loadSearch({inputValue: formDataProps.search, page}))
+        console.log('FORM',formDataProps);
+        if (/^[a-zA-Z]+$/.test(formDataProps.search)){
+            try {
+                getSearch(formDataProps.search, page )
+                    .then((results) => {
+                        setSearchResults(results || []);
+                    })
+            } catch (error) {
+                console.error("Search error:", error);
+            }
+        }else if(/^[0-9]+$/.test(formDataProps.search)){
+            try {
+                getSearchId(formDataProps.search, page )
+                    .then((results) => {
+                        setSearchResults(results || []);
+                    })
+            } catch (error) {
+                console.error("Search error:", error);
+            }
+        }
+
     };
 
-
+//   /^[a-zA-Z]+$/
+//   /^[0-9]+$/
 
     return (
         <div>
@@ -54,3 +77,5 @@ const Search = ({page}: SearchProps) => {
 };
 
 export default Search;
+
+

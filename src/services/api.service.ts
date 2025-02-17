@@ -6,6 +6,7 @@ import {ITokens} from "@/models/ITokens";
 import {IUsersResponse} from "@/models/IUsersResponse";
 import {IRecipesResponse} from "@/models/IRecipesResponse";
 import {IRecipe} from "@/models/IRecipe";
+import {ISearchResponse} from "@/models/ISearchResponse";
 
 
 type LoginProps = {
@@ -73,23 +74,23 @@ export const getAuthUser = async () => {
 // };
 
 
-export const refresh = async () => {
+export const refresh = async ():Promise<ITokens> => {
     const refToken = await getCookiesRefreshToken();
-    console.log("Рефреш токен пришел",refToken);
+    console.log("refresh токен пришел",refToken);
     const {data} = await axiosInstance.post('/refresh', {refreshToken: refToken, expiresInMins: 60});
-    console.log('DATA:',data);
+    console.log('DATA refresh:',data);
     const iTokens: ITokens = {
         accessToken: data.accessToken,
         refreshToken: data.refreshToken,
     }
-    console.log('iTokens:',iTokens);
+    console.log('iTokens refresh:',iTokens);
     await setCookies(iTokens, false);
-    console.log("Токены обновлены", iTokens);
+    console.log("Токены обновлены refresh", iTokens);
     return iTokens;
 }
 
 
-export const getUser = async (id: string) => {
+export const getUser = async (id: string):Promise<IUser> => {
     const {data} = await axiosInstance.get<IUser>('/users/' + id);
     console.log('getUser:',data);
     return data;
@@ -132,7 +133,7 @@ export const getUser = async (id: string) => {
 
 
 // AXIOS----------------------------------------------------------------------------
-export const getResourcesUsers = async (page: number, limit: number) => {
+export const getResourcesUsers = async (page: number, limit: number):Promise<IUsersResponse> => {
     const skip: number = limit * page - limit;
     const {data: data} = await axiosInstance.get<IUsersResponse>('/users?skip=' + skip + '&limit=' + limit);
     console.log('getResourcesUsers:',data);
@@ -157,41 +158,47 @@ export const getResourcesUsers = async (page: number, limit: number) => {
 
 
 
-export const getRecipe = async (id: string) => {
+export const getRecipe = async (id: string):Promise<IRecipe> => {
     const {data} = await axiosInstance.get<IRecipe>('/recipes/' + id);
     console.log('getRecipe:',data);
     return data;
 }
 
 
-export const getResourcesRecipes = async (page: number, limit: number) => {
+export const getResourcesRecipes = async (page: number, limit: number):Promise<IRecipesResponse> => {
     const skip: number = limit * page - limit;
     const {data: data} = await axiosInstance.get<IRecipesResponse>('/recipes?skip=' + skip + '&limit=' + limit);
     return data;
 }
 
 
-export const getRecipesTag = async (tagValue: string) => {
+export const getRecipesTag = async (tagValue: string):Promise<IRecipe[]> => {
     const {data: {recipes: tags}} = await axiosInstance.get<IRecipesResponse>('/recipes/tag/' + tagValue);
     console.log(tags);
     return tags;
 }
 
-// export const getSearch = async (inputValue: string, page: string) => {
-//     const{data} = await axiosInstance.get<ISearchResponse>('/' + page + '/search?q=' + inputValue);
-//     if ('recipes' in data) {
-//         console.log(data.recipes);
-//         return data.recipes;
-//     }
-//
-//     if ('users' in data) {
-//         console.log(data.users);
-//         return data.users;
-//     }
-//
-//     return [];
-// }
-//
-//
-//
-//
+export const getSearch = async (inputValue: string, page: string):Promise<IRecipe[] | IUser[] | undefined> => {
+    const{data} = await axiosInstance.get<ISearchResponse>('/' + page + '/search?q=' + inputValue);
+    if ('recipes' in data) {
+        console.log('getSearch recipes:',data.recipes);
+        return data.recipes;
+    }
+
+    if ('users' in data) {
+        console.log('getSearch users:',data.users);
+        return data.users;
+    }
+
+    return [];
+}
+
+export const getSearchId = async (id: string, page: string):Promise<IRecipe[] | IUser[] | undefined> => {
+    const{data} = await axiosInstance.get('/' + page + '/' + id);
+    console.log(data);
+    return data ? [data] : [];
+}
+
+
+
+
