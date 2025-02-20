@@ -1,3 +1,5 @@
+'use server'
+
 
 import UsersList from "@/components/usersList/UsersList";
 import Pagination from "@/components/pagination/Pagination";

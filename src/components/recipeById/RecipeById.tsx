@@ -1,28 +1,3 @@
-// import {Link, useParams} from "react-router-dom";
-// import {useAppSelector} from "../../redux/hooks/useAppSelector.tsx";
-// import {useAppDispatch} from "../../redux/hooks/useAppDispatch.tsx";
-// import {useEffect} from "react";
-// import {refresh} from "../../services/api.service.ts";
-// import {recipeSliceAction} from "../../redux/slices/recipeSlice/recipeSlice.ts";
-// import './RecipeById.css'
-//
-//
-// const RecipeById = () => {
-//
-//     const {id} = useParams();
-//
-//     const recipe = useAppSelector(state => state.recipeSlice.recipe);
-//     const dispatch = useAppDispatch();
-//
-//     useEffect(() => {
-//         if (id) {
-//             dispatch(recipeSliceAction.loadRecipe(id));
-//             refresh()
-//                 .then(() => dispatch(recipeSliceAction.loadRecipe(id)))
-//                 .catch((error) => console.log(error))
-//         }
-//     }, [dispatch, id]);
-
 import './RecipeById.css'
 import {getRecipe} from "@/services/api.service";
 import Link from "next/link";

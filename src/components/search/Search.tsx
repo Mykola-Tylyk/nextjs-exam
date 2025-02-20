@@ -50,8 +50,7 @@ const Search = ({page}: SearchProps) => {
 
     };
 
-//   /^[a-zA-Z]+$/
-//   /^[0-9]+$/
+
 
     return (
         <div>

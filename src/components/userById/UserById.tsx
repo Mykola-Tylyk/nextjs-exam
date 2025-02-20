@@ -1,28 +1,3 @@
-// import {useParams} from "react-router-dom";
-// import {useEffect} from "react";
-// import {useAppSelector} from "../../redux/hooks/useAppSelector.tsx";
-// import {useAppDispatch} from "../../redux/hooks/useAppDispatch.tsx";
-// import {userSliceAction} from "../../redux/slices/userSlice/userSlice.ts";
-// import {refresh} from "../../services/api.service.ts";
-// import RecipesList from "../../components/recipesList/RecipesList.tsx";
-//
-// const UserById = () => {
-//
-//     const {id} = useParams();
-//
-//     const user = useAppSelector(state => state.userSlice.user);
-//     const dispatch = useAppDispatch();
-//
-//     useEffect(() => {
-//         if (id) {
-//             dispatch(userSliceAction.loadUser(id));
-//             refresh()
-//                 .then(() => dispatch(userSliceAction.loadUser(id)))
-//                 .catch((error) => console.log(error))
-//         }
-//     }, [dispatch, id]);
-
-
 import {getUser} from "@/services/api.service";
 import RecipesList from "@/components/recipesList/RecipesList";
 
