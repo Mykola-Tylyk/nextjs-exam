@@ -1,9 +1,10 @@
 import './RecipeById.css'
-import {getRecipe, refresh} from "@/services/api.service";
+import {getRecipe} from "@/services/api.service";
 import Link from "next/link";
+import UpdateToken from "@/components/updateToken/UpdateToken";
 
 const RecipeById = async ({id}: {id: string}) => {
-    await refresh();
+
     const recipe = await getRecipe(id);
 
     return (
@@ -28,6 +29,7 @@ const RecipeById = async ({id}: {id: string}) => {
                     <p><Link href={`/user/users/${recipe.userId}`}><strong>view user of this recipe</strong> - {recipe.userId}</Link></p>
                 </div>
             }
+            <UpdateToken/>
         </div>
     );
 };

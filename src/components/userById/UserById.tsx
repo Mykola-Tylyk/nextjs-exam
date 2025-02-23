@@ -1,8 +1,9 @@
-import {getUser, refresh} from "@/services/api.service";
+import {getUser} from "@/services/api.service";
 import RecipesList from "@/components/recipesList/RecipesList";
+import UpdateToken from "@/components/updateToken/UpdateToken";
 
 const UserById = async ({id}: {id: string}) => {
-    await refresh();
+
 
     const user = await getUser(id);
 
@@ -26,6 +27,7 @@ const UserById = async ({id}: {id: string}) => {
                     <RecipesList userId={parseInt(id || '')} currentPage={1} limit={0} />
                 </div>
             }
+            <UpdateToken/>
         </div>
     );
 };

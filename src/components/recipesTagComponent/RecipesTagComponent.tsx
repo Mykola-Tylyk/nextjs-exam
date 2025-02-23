@@ -1,7 +1,8 @@
-import {getRecipesTag, refresh} from "@/services/api.service";
+import {getRecipesTag} from "@/services/api.service";
+import UpdateToken from "@/components/updateToken/UpdateToken";
 
 const RecipesTagComponent = async ({recipesTag}: { recipesTag: string }) => {
-    await refresh();
+
     const tags = await getRecipesTag(recipesTag);
 
 
@@ -25,6 +26,7 @@ const RecipesTagComponent = async ({recipesTag}: { recipesTag: string }) => {
             ) : (
                 <p>No recipes found for this tag.</p>
             )}
+            <UpdateToken/>
         </div>
     );
 };
