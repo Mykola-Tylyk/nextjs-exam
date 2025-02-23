@@ -1,19 +1,13 @@
 'use server'
 
-
-import {getResourcesUsers} from "@/services/api.service";
 import UserSingleComponent from "@/components/userSingleComponent/UserSingleComponent";
 import {IUser} from "@/models/IUser";
 import Search from "@/components/search/Search";
+import {IUsersResponse} from "@/models/IUsersResponse";
 
 
+const UsersList = async ({ data }: { data: IUsersResponse }) => {
 
-
-const UsersList = async ({ currentPage, limit }: { currentPage: number, limit: number }) => {
-    const page = currentPage || 1;
-
-
-    const data = await getResourcesUsers(page, limit);
 
     return (
         <div>

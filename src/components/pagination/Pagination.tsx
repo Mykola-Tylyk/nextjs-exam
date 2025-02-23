@@ -1,6 +1,7 @@
 "use client";
 
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import {refresh} from "@/services/api.service";
 
 const Pagination = ({ totalPages }: { totalPages: number }) => {
     const searchParams = useSearchParams();
@@ -10,9 +11,10 @@ const Pagination = ({ totalPages }: { totalPages: number }) => {
     const currentPage = Number(searchParams.get("page")) || 1;
     console.log(currentPage);
 
-    const updatePage = (newPage: number) => {
+    const updatePage = async (newPage: number) => {
         const params = new URLSearchParams(searchParams.toString());
         params.set("page", newPage.toString());
+        await refresh();
         router.push(`${pathname}?${params.toString()}`);
     };
 

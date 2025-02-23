@@ -6,7 +6,7 @@ import {ISearchProps} from "@/models/ISearchProps";
 import {useForm} from "react-hook-form";
 import RecipeSingleComponent from "@/components/recipeSingleComponent/RecipeSingleComponent";
 import UserSingleComponent from "@/components/userSingleComponent/UserSingleComponent";
-import {getSearch, getSearchId} from "@/services/api.service";
+import {getSearch, getSearchId, refresh} from "@/services/api.service";
 import {useState} from "react";
 import {IRecipe} from "@/models/IRecipe";
 import {IUser} from "@/models/IUser";
@@ -26,8 +26,9 @@ const Search = ({page}: SearchProps) => {
         resolver: joiResolver(searchValidator)
     });
 
-    const handler = (formDataProps: ISearchProps) => {
+    const handler = async (formDataProps: ISearchProps) => {
         console.log('FORM',formDataProps);
+        await refresh();
         if (/^[a-zA-Z]+$/.test(formDataProps.search)){
             try {
                 getSearch(formDataProps.search, page )

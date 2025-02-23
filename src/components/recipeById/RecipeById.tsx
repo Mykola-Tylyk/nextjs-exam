@@ -1,8 +1,9 @@
 import './RecipeById.css'
-import {getRecipe} from "@/services/api.service";
+import {getRecipe, refresh} from "@/services/api.service";
 import Link from "next/link";
 
 const RecipeById = async ({id}: {id: string}) => {
+    await refresh();
     const recipe = await getRecipe(id);
 
     return (

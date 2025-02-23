@@ -1,7 +1,8 @@
-import {getRecipesTag} from "@/services/api.service";
+import {getRecipesTag, refresh} from "@/services/api.service";
 
-const RecipesTagComponent= async ({recipesTag}: {recipesTag: string}) => {
-const tags = await getRecipesTag(recipesTag)
+const RecipesTagComponent = async ({recipesTag}: { recipesTag: string }) => {
+    await refresh();
+    const tags = await getRecipesTag(recipesTag);
 
 
     return (
@@ -10,9 +11,9 @@ const tags = await getRecipesTag(recipesTag)
             {tags.length > 0 ? (
                 <div>
                     {tags.map((recipe) => (
-                        <div key={recipe.id} style={{ marginBottom: "20px" }}>
+                        <div key={recipe.id} style={{marginBottom: "20px"}}>
                             <h4>{recipe.name}</h4>
-                            <img src={recipe.image} alt={recipe.name} width="200" />
+                            <img src={recipe.image} alt={recipe.name} width="200"/>
                             <p><strong>Cuisine:</strong> {recipe.cuisine}</p>
                             <p><strong>Difficulty:</strong> {recipe.difficulty}</p>
                             <p><strong>Rating:</strong> {recipe.rating} ({recipe.reviewCount} reviews)</p>

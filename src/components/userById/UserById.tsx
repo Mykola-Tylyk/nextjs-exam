@@ -1,7 +1,8 @@
-import {getUser} from "@/services/api.service";
+import {getUser, refresh} from "@/services/api.service";
 import RecipesList from "@/components/recipesList/RecipesList";
 
 const UserById = async ({id}: {id: string}) => {
+    await refresh();
 
     const user = await getUser(id);
 
